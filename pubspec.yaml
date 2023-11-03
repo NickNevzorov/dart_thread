@@ -1,6 +1,6 @@
 name: dart_thread
 description: Mapping isolates and web workers to single interface
-version: 0.0.2
+version: 0.0.3
 homepage:  https://github.com/NickNevzorov/dart_thread
 
 environment:
