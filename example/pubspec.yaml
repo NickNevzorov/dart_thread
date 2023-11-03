@@ -10,5 +10,5 @@ dependencies:
     sdk: flutter
 
   dart_thread:
-    path: ../../dart_thread/
+    path: ../
 
