@@ -111,7 +111,8 @@ class TestThread extends DartThread {
   @override
   dynamic messageToObject(dynamic message) {
     if (message is Map<String, dynamic>) {
-      if (message['runtimeType'] == 'CustomClass') return CustomClass.fromJson(message);
+      if (message['runtimeType'] == 'CustomClass') 
+        return CustomClass.fromJson(message);
     }
 
     return super.messageToObject(message);
