@@ -2,7 +2,6 @@ name: dart_thread
 description: Mapping isolates and web workers to single interface, that allow to write one code for different platforms
 version: 0.0.3
 homepage: https://github.com/NickNevzorov/dart_thread
-publish_to: none
 
 environment:
   sdk: ">=2.15.0 <4.0.0"
