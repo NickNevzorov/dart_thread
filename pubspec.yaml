@@ -1,0 +1,7 @@
+name: dart_thread
+description: Mapping isolates and web workers to single interface
+version: 0.0.1
+homepage:  https://github.com/vsgroup/dart_thread
+
+environment:
+  sdk: ">=2.15.0 <4.0.0"
