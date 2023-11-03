@@ -1,11 +1,11 @@
-import 'dart:io';
 import 'dart:math';
-
 import 'package:dart_thread/dart_thread.dart';
 
 class TestThread extends DartThread {
 
-  static TestThread newInstance() => TestThread(); // Need to mapping Class to super.init, because dart did not allow override a static method
+  // Need to mapping Class to super.init,
+  // because dart did not allow override a static method
+  static TestThread newInstance() => TestThread();
 
   @override
   Future<void> onExecute(Function(dynamic message) sendMessage) async {
@@ -23,10 +23,10 @@ class TestThread extends DartThread {
     sendMessage(message);
 
   }
-  
+
 }
 
-main() async {
+void main() async {
 
   TestThread testThread = TestThread();
 
@@ -41,7 +41,5 @@ main() async {
   await Future.delayed(Duration(seconds: 10));
 
   testThread.deInit();
-
-  exit(0);
 
 }

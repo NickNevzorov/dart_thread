@@ -6,6 +6,9 @@ environment:
 
 dependencies:
 
+  flutter:
+    sdk: flutter
+
   dart_thread:
     path: ../../dart_thread/
 
