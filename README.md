@@ -1,14 +1,14 @@
-Mapping isolates and web workers to single interface
+Classic thread implementation (such as TThread in Delphi). Single code for all platforms (mapping to isolate on desktop or to worker on web).
 
 ## Features
 
-Provides one interface to writing isolates for desktop and web workers to web platform.
+Class DartThread has an onExecute method, which executing on thread start, and onGetMessage, which triggered when main thread send a message. 
+DartThread also can send a messages to main thread.
 
-You need to create a new class extend DartThread and override methods:
-
-1. onGetMessage - for receiving a messages from main thread
-2. onExecute - for execution task in thread
-3. messageToObject - for mapping custom class to web worker
+Web platform have restriction while sending variables from main thread to worker. 
+JS allow sends only primitives, not a custom classed and other structures. 
+For communication with worker DartThread has an messageToObject method, witch allow implements unpacking custom variables from json. 
+For packing data custom class will have an toJson and fromJson methods.
 
 ## Usage
 
@@ -20,6 +20,7 @@ class TestThread extends DartThread {
   static TestThread newInstance() => TestThread(); 
 
   @override
+  // Running once in isolate or worker 
   Future<void> onExecute(Function(dynamic message) sendMessage) async {
 
     while (true) {
@@ -30,6 +31,7 @@ class TestThread extends DartThread {
   }
 
   @override
+  // Triggered on each sendMessage from main thread  
   Future<void> onGetMessage(message, Function(dynamic message) sendMessage) async {
 
     sendMessage(message);
@@ -48,10 +50,12 @@ main() async {
 
   await testThread.init(TestThread.newInstance, (message) {
 
+    // Receive from isolate or worker
     print(message);
 
   });
 
+  // Send message to isolate or worker
   testThread.sendMessage('echo');
 
   await Future.delayed(Duration(seconds: 10));
@@ -73,7 +77,7 @@ main() async {
 
 import 'dart:html';
 import 'dart:js_interop';
-import 'dart_thread_example.dart';
+import 'main.dart';
 
 @JS('self')
 external DedicatedWorkerGlobalScope get self;
@@ -85,7 +89,7 @@ void main() async {
 }
 ```
 
-2. Compile dart file to js using command-line:
+2. Compile dart file to js using command-line in web folder of project:
 
 ```cmd
 set "dart_path=D:\sdk\flutter\bin\cache\dart-sdk\bin"
@@ -94,8 +98,6 @@ set "flutter_web_sdk=D:\sdk\flutter\bin\cache\flutter_web_sdk"
 call "%dart_path%\dart" compile js -O2 --libraries-spec="%flutter_web_sdk"\libraries.json -o web/TestThread.dart.js lib/TestThread.dart || pause
 ```
 
-3. Move dart.js file in web folder of Flutter app  
- 
 ## Send custom classes to web worker
 
 ```dart
@@ -114,7 +116,6 @@ class TestThread extends DartThread {
       if (message['runtimeType'] == 'CustomClass') 
         return CustomClass.fromJson(message);
     }
-
     return super.messageToObject(message);
   }
 }

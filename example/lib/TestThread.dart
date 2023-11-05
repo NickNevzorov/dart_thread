@@ -1,3 +1,4 @@
+// ignore: avoid_web_libraries_in_flutter
 @JS()
 
 import 'dart:html';
@@ -8,7 +9,5 @@ import 'main.dart';
 external DedicatedWorkerGlobalScope get self;
 
 void main() async {
-
   await TestThread().main(self);
-
 }

@@ -5,19 +5,27 @@ typedef NewInstance = DartThreadInterface Function();
 
 abstract class DartThreadInterface {
 
+  /// init new isolate or worker
   Future<void> init(NewInstance newInstance, OnMessage onGetMessage);
+
+  /// kill isolate or stop worker
   Future<void> deInit();
 
+  /// send message from main thread to isolate or worker
   void sendMessage(dynamic message);
-  Future<void> onGetMessage(dynamic message, Function(dynamic message) sendMessage);
-  Future<void> onExecute(Function(dynamic message) sendMessage);
 
+  /// receive message in isolate or worker from main thread
+  Future<void> onGetMessage(dynamic message, Function(dynamic message) sendMessage) async {}
+
+  /// running once in isolate or worker after starting
+  Future<void> onExecute(Function(dynamic message) sendMessage) async {}
+
+  /// converting message to dart object, only for web
   dynamic messageToObject(dynamic message) {
     return message;
   }
 
-  Future<void> main(dynamic obj) async {
-
-  }
+  /// starting new thread in worker, only for web
+  Future<void> main(dynamic obj) async {}
 
 }
