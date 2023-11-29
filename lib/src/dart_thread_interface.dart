@@ -3,8 +3,8 @@ typedef OnGetMessage = Function(dynamic message, OnMessage);
 typedef OnExecute = Function(OnMessage);
 typedef NewInstance = DartThreadInterface Function();
 
+/// DartThread interface for all platforms
 abstract class DartThreadInterface {
-
   /// init new isolate or worker
   Future<void> init(NewInstance newInstance, OnMessage onGetMessage);
 
@@ -15,7 +15,8 @@ abstract class DartThreadInterface {
   void sendMessage(dynamic message);
 
   /// receive message in isolate or worker from main thread
-  Future<void> onGetMessage(dynamic message, Function(dynamic message) sendMessage) async {}
+  Future<void> onGetMessage(
+      dynamic message, Function(dynamic message) sendMessage) async {}
 
   /// running once in isolate or worker after starting
   Future<void> onExecute(Function(dynamic message) sendMessage) async {}
@@ -27,5 +28,4 @@ abstract class DartThreadInterface {
 
   /// starting new thread in worker, only for web
   Future<void> main(dynamic obj) async {}
-
 }

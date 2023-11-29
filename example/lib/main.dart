@@ -1,18 +1,15 @@
 import 'package:dart_thread/dart_thread.dart';
 
 class TestThread extends DartThread {
-
   // Need to mapping Class to super.init,
   // because dart did not allow override a static method
   static TestThread newInstance() => TestThread();
 
   @override
   messageToObject(message) {
-
     if (message is Map<String, dynamic>) {
-
-      if (message['runtimeType'] == 'CustomClass') return CustomClass.fromJson(message);
-
+      if (message['runtimeType'] == 'CustomClass')
+        return CustomClass.fromJson(message);
     }
 
     return super.messageToObject(message);
@@ -28,11 +25,11 @@ class TestThread extends DartThread {
   }
 
   @override
-  Future<void> onGetMessage(message, Function(dynamic message) sendMessage) async {
+  Future<void> onGetMessage(
+      message, Function(dynamic message) sendMessage) async {
     print('Receive message from main thread: $message');
     sendMessage(message);
   }
-
 }
 
 class CustomClass {
@@ -47,21 +44,19 @@ class CustomClass {
   }
 
   Map<String, dynamic> toJson() => {
-    'runtimeType': 'CustomClass',
-    'i': i,
-    's': s,
-    'd' : d,
-  };
+        'runtimeType': 'CustomClass',
+        'i': i,
+        's': s,
+        'd': d,
+      };
 
-  CustomClass.fromJson(Map<String, dynamic> json) :
-        i = json['i'],
+  CustomClass.fromJson(Map<String, dynamic> json)
+      : i = json['i'],
         s = json['s'],
         d = json['d'];
-
 }
 
 void main() async {
-
   TestThread testThread1 = TestThread();
   TestThread testThread2 = TestThread();
 
@@ -84,5 +79,4 @@ void main() async {
 
   testThread1.deInit();
   testThread2.deInit();
-
 }
