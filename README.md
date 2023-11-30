@@ -1,6 +1,6 @@
 ## dart_thread
 
-Classic thread implementation (such as TThread in Delphi). Easy to use, single code for all platforms (mapping to isolate on desktop or to worker on web).
+Classic thread implementation (such as TThread in Delphi). Easy to use, single code for all platforms (mapping to isolates on desktop or to workers on web).
 
 ## Features
 
