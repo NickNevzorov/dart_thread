@@ -1,6 +1,6 @@
 name: dart_thread
 description: Classic thread implementation (such as TThread in Delphi). Easy to use, single code for all platforms (mapping to isolates on desktop or to workers on web).
-version: 0.0.8
+version: 0.0.9
 homepage: https://github.com/NickNevzorov/dart_thread
 
 environment:
