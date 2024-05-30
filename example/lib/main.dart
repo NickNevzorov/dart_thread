@@ -5,6 +5,12 @@ class TestThread extends DartThread {
   // because dart did not allow override a static method
   static TestThread newInstance() => TestThread();
 
+  // Need to setup script name in web platform
+  @override
+  String jsFileName() {
+    return 'TestThread';
+  }
+
   @override
   messageToObject(message) {
     if (message is Map<String, dynamic>) {

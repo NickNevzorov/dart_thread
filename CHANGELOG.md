@@ -1,3 +1,7 @@
+## 0.0.10
+
+* Add jsFileName to setup script name for WEB platform (https://github.com/dart-lang/sdk/issues/9217)
+
 ## 0.0.9
 
 * Fixes for Flutter 3.16 (https://github.com/dart-lang/sdk/issues/54482)
