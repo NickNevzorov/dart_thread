@@ -14,7 +14,7 @@ abstract class DartThreadWorker extends DartThreadInterface {
 
   Future<void> init(NewInstance newInstance, OnMessage onGetMessage) async {
     deInit();
-    worker = new Worker(jsFileName()  + '.dart.js');
+    worker = new Worker(jsFileName() + '.dart.js');
     worker?.onMessage.listen((MessageEvent e) {
       dynamic message = jsonDecode(e.data);
       onGetMessage.call(messageToObject(message));

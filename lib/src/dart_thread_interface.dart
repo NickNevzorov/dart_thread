@@ -28,5 +28,4 @@ abstract class DartThreadInterface {
 
   /// starting new thread in worker, only for web
   Future<void> main(dynamic obj) async {}
-
 }
