@@ -9,6 +9,10 @@ abstract class DartThreadIsolate extends DartThreadInterface {
   Isolate? isolate;
   SendPort? sendMessagePort;
 
+  String jsFileName() {
+    return this.runtimeType.toString();
+  }
+
   Future<void> init(NewInstance newInstance, OnMessage onGetMessage) async {
     await deInit();
 

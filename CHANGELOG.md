@@ -1,4 +1,4 @@
-## 0.0.11
+## 0.0.12
 
 * Add jsFileName to setup script name for WEB platform (https://github.com/dart-lang/sdk/issues/9217)
 
