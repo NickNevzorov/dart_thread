@@ -12,7 +12,8 @@ abstract class DartThreadWorker extends DartThreadInterface {
   /// js script file name
   String jsFileName();
 
-  Future<void> init(NewInstance newInstance, OnMessage onGetMessage) async {
+  Future<void> init(NewInstance newInstance, OnMessage onGetMessage,
+      {dynamic initMessage}) async {
     deInit();
     worker = new Worker(jsFileName() + '.dart.js');
     worker?.onMessage.listen((MessageEvent e) {

@@ -3,8 +3,9 @@
 
 library dart_thread;
 
-import 'src/dart_thread_isolate.dart'
-    if (dart.library.js) 'src/dart_thread_web.dart' as dart_thread;
+import 'src/dart_thread_stub.dart'
+    if (dart.library.html) 'src/dart_thread_web.dart'
+    if (dart.library.io) 'src/dart_thread_isolate.dart' as dart_thread;
 
 // debug
 // import 'src/dart_thread_isolate.dart' as dart_thread;

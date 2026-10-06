@@ -13,7 +13,8 @@ abstract class DartThreadIsolate extends DartThreadInterface {
     return this.runtimeType.toString();
   }
 
-  Future<void> init(NewInstance newInstance, OnMessage onGetMessage) async {
+  Future<void> init(NewInstance newInstance, OnMessage onGetMessage,
+      {dynamic initMessage}) async {
     await deInit();
 
     final ReceivePort port = ReceivePort();
@@ -21,8 +22,7 @@ abstract class DartThreadIsolate extends DartThreadInterface {
     List<dynamic> params = [];
     params.add(port.sendPort);
     params.add(newInstance);
-    //params.add(onExecute);
-    //params.add(onGetMessage);
+    params.add(initMessage);
     isolate = await Isolate.spawn(start, params, errorsAreFatal: false);
 
     Completer c = new Completer();
@@ -42,8 +42,7 @@ abstract class DartThreadIsolate extends DartThreadInterface {
   static void start(List<dynamic> params) async {
     final SendPort sendPort = params[0];
     final DartThread dartThread = params[1]();
-    //OnExecute onExecute = params[1];
-    //OnGetMessage onGetMessage = params[2];
+    final message = params[2];
 
     final isolateReceivePort = ReceivePort();
 
@@ -56,6 +55,8 @@ abstract class DartThreadIsolate extends DartThreadInterface {
     });
 
     sendMessage(isolateReceivePort.sendPort);
+
+    if (message != null) await dartThread.onGetMessage(message, sendMessage);
     await dartThread.onExecute(sendMessage);
   }
 

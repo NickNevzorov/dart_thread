@@ -1,3 +1,7 @@
+## 0.0.13
+
+* Add initMessage to DartThread.init
+
 ## 0.0.12
 
 * Add jsFileName to setup script name for WEB platform (https://github.com/dart-lang/sdk/issues/9217)
