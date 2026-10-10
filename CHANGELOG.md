@@ -1,3 +1,7 @@
+## 0.0.14
+
+* Update to web package
+
 ## 0.0.13
 
 * Add initMessage to DartThread.init

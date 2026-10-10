@@ -1,7 +1,7 @@
 // ignore: avoid_web_libraries_in_flutter
 @JS()
 
-import 'dart:html';
+import 'package:web/web.dart';
 import 'dart:js_interop';
 import 'main.dart';
 

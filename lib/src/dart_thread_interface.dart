@@ -14,6 +14,9 @@ abstract class DartThreadInterface {
   /// kill isolate or stop worker
   Future<void> deInit();
 
+  /// js script file name for WEB
+  String jsFileName();
+
   /// send message from main thread to isolate or worker
   void sendMessage(dynamic message);
 

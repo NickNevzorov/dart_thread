@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'dart:html';
+import 'dart:js_interop';
+import 'package:web/web.dart';
 import 'dart_thread_interface.dart';
 
 /// DartThread implementation for web
@@ -9,15 +10,14 @@ abstract class DartThreadWorker extends DartThreadInterface {
   Worker? worker;
   DedicatedWorkerGlobalScope? self;
 
-  /// js script file name
-  String jsFileName();
-
   Future<void> init(NewInstance newInstance, OnMessage onGetMessage,
       {dynamic initMessage}) async {
     deInit();
-    worker = new Worker(jsFileName() + '.dart.js');
-    worker?.onMessage.listen((MessageEvent e) {
-      dynamic message = jsonDecode(e.data);
+    worker = new Worker((jsFileName() + '.dart.js').toJS);
+    EventStreamProviders.messageEvent
+        .forTarget(worker)
+        .listen((MessageEvent e) {
+      dynamic message = jsonDecode(e.data.toString());
       onGetMessage.call(messageToObject(message));
     });
   }
@@ -28,7 +28,7 @@ abstract class DartThreadWorker extends DartThreadInterface {
 
   void sendMessage(dynamic message) {
     String objString = jsonEncode(message);
-    worker?.postMessage(objString);
+    worker?.postMessage(objString.toJS);
   }
 
   Future<void> main(dynamic obj) async {
@@ -36,11 +36,11 @@ abstract class DartThreadWorker extends DartThreadInterface {
 
     var sendMessage = (dynamic message) {
       String objString = jsonEncode(message);
-      self?.postMessage(objString);
+      self?.postMessage(objString.toJS);
     };
 
-    self?.onMessage.listen((e) async {
-      dynamic message = jsonDecode(e.data);
+    EventStreamProviders.messageEvent.forTarget(self).listen((e) async {
+      dynamic message = jsonDecode(e.data.toString());
       await onGetMessage(messageToObject(message), sendMessage);
     });
 
